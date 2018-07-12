@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vms="clr-namespace:Kanban.ViewModels"
+             x:Class="Kanban.Views.NewTaskPage"
+             BindingContext="{Binding Source=StaticResource NewTaskPage}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vms:NewTaskPageViewModel x:Key="NewTaskPage"></vms:NewTaskPageViewModel>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <StackLayout>
+        <Label Text="Tarea" />
+        <Entry Text="{Binding Name, Mode=TwoWay}"></Entry>
+        <Label Text="Fecha"></Label>
+        <DatePicker Date="{Binding , Mode=TwoWay}"></DatePicker>
+        <Label Text="Hora"></Label>
+        <TimePicker Time="{Binding Time, Mode=TwoWay}"></TimePicker>
+        
+        <Button Command="{Binding CreateCommand}"></Button>
+    </StackLayout>
+</ContentPage>

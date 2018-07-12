@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<TabbedPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:views="clr-namespace:Kanban.Views"
+             xmlns:vms="clr-namespace:Kanban.ViewModels"
+             x:Class="Kanban.Views.MainPage"
+             BindingContext="{Binding Source={StaticResource MainPage}}">
+
+    <TabbedPage.Resources>
+        <ResourceDictionary>
+            <vms:MainPageViewModel x:Key="MainPage"></vms:MainPageViewModel>
+        </ResourceDictionary>
+    </TabbedPage.Resources>
+    <views:ToDoPage Title="To Do"></views:ToDoPage>
+    <views:DoingPage Title="Doing"></views:DoingPage>
+    <ContentPage Title="Done">
+        <ListView 
+            HasUnevenRows="True"
+            ItemTemplate="{StaticResource TaskItemTemplate}"
+            ItemsSource="{Binding Done}">
+            
+        </ListView>
+    </ContentPage>
+
+    <TabbedPage.ToolbarItems>
+        <ToolbarItem Icon="ic_add.png" Command="{Binding AddTaskCommand}"></ToolbarItem>
+    </TabbedPage.ToolbarItems>
+</TabbedPage>

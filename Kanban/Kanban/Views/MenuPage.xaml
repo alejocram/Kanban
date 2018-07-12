@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vms="clr-namespace:Kanban.ViewModels"
+             x:Class="Kanban.Views.MenuPage"
+             BindingContext="{Binding Source={StaticResource MenuPage}}">
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <vms:MenuPageViewModel x:Key="MenuPage"></vms:MenuPageViewModel>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"></RowDefinition>
+            <RowDefinition Height="Auto"></RowDefinition>
+        </Grid.RowDefinitions>
+
+        <ListView 
+            HasUnevenRows="True"
+            ItemsSource="{Binding Items}"
+            ItemTemplate="{StaticResource MenuItemTemplate}">
+            
+        </ListView>
+    </Grid>
+</ContentPage>
