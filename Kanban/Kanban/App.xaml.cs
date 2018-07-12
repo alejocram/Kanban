@@ -1,3 +1,4 @@
+using Kanban.ViewModels.Base;
 using Kanban.Views;
 using System;
 using Xamarin.Forms;
@@ -9,11 +10,13 @@ namespace Kanban
 	public partial class App : Application
 	{
         public static NavigationPage Navigator { get; internal set; }
+        public static ViewModelLocator Locator { get; internal set; }
+        public static MasterPage Master { get; internal set; }
 
         public App ()
 		{
 			InitializeComponent();
-
+            Locator = (ViewModelLocator)this.Resources["Locator"];
 			MainPage = new MasterPage();
 		}
 

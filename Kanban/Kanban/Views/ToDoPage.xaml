@@ -2,13 +2,8 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:vms="clr-namespace:Kanban.ViewModels"
-             x:Class="Kanban.Views.ToDoPage"
-             >
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <vms:MainPageViewModel x:Key="ToDo"></vms:MainPageViewModel>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+             x:Class="Kanban.Views.ToDoPage">
+
     <ListView 
         HasUnevenRows="True"
         ItemsSource="{Binding ToDo}"

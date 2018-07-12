@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Kanban.Base
 {
-    class BindableBase : INotifyPropertyChanged
+    public class BindableBase : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged;
 

@@ -37,7 +37,7 @@ namespace Kanban.ViewModels
                 Name = "About",
                 Description = "About the developers",
                 Picture = "ic_about.png",
-                ActionKey = "About"
+                ActionKey = "AboutPage"
             });
 
 

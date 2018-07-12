@@ -10,19 +10,11 @@ using Xamarin.Forms.Xaml;
 namespace Kanban.Views
 {
 	[XamlCompilation(XamlCompilationOptions.Compile)]
-	public partial class MasterPage : MasterDetailPage
-    {
-		public MasterPage ()
+	public partial class AboutPage : ContentPage
+	{
+		public AboutPage ()
 		{
 			InitializeComponent ();
 		}
-
-        protected override void OnAppearing()
-        {
-            App.Navigator = this.Navigator;
-            App.Master = this;
-
-            base.OnAppearing();
-        }
-    }
+	}
 }

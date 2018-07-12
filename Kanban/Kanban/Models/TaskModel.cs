@@ -1,10 +1,12 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using SQLite.Net.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace Kanban.Models
 {
-    class TaskModel
+    public class TaskModel
     {
         public string Id { get; set; }
         public string Name { get; set; }
