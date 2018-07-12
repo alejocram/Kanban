@@ -4,13 +4,8 @@
              xmlns:views="clr-namespace:Kanban.Views"
              xmlns:vms="clr-namespace:Kanban.ViewModels"
              x:Class="Kanban.Views.MainPage"
-             BindingContext="{Binding Source={StaticResource MainPage}}">
+             BindingContext="{Binding MainPage, Source={StaticResource Locator}}">
 
-    <TabbedPage.Resources>
-        <ResourceDictionary>
-            <vms:MainPageViewModel x:Key="MainPage"></vms:MainPageViewModel>
-        </ResourceDictionary>
-    </TabbedPage.Resources>
     <views:ToDoPage Title="To Do"></views:ToDoPage>
     <views:DoingPage Title="Doing"></views:DoingPage>
     <ContentPage Title="Done">

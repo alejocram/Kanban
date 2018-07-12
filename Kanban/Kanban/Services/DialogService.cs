@@ -6,5 +6,9 @@ namespace Kanban.Services
 {
     class DialogService
     {
+        internal void ShowMessage(string message)
+        {
+            App.Navigator.DisplayAlert("Kanban", message, "OK");
+        }
     }
 }

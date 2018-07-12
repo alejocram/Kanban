@@ -1,18 +1,22 @@
 ﻿using Kanban.Base;
 using Kanban.Models;
 using Kanban.Services;
+using Kanban.Services.LocalDatabase;
+using Kanban.Views;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Forms;
 
 namespace Kanban.ViewModels
 {
-    class MainPageViewModel : BindableBase
+    public class MainPageViewModel : BindableBase
     {
         private readonly NavigationService navigationService;
+        private readonly LocalDatabaseService localDatabaseService;
 
         public ObservableCollection<TaskModel> ToDo { get; set; }
         public ObservableCollection<TaskModel> Doing { get; set; }
@@ -32,37 +36,62 @@ namespace Kanban.ViewModels
 
         public MainPageViewModel()
         {
+            MessagingCenter.Subscribe<string>(this, "ExecuteAction", (actionToExecute) =>
+            {
+                switch (actionToExecute)
+                {
+                    case "Clean":
+                        ToDo.Clear();
+                        Doing.Clear();
+                        Done.Clear();
+                        break;
+                    case "Reset":
+
+                        break;
+                    case "AboutPage":
+                        navigationService.Navigate(actionToExecute);
+                        break;
+                    default:
+                        break;
+                }
+            });
+
             navigationService = new NavigationService();
+            localDatabaseService = new LocalDatabaseService();
+
+            InitializeDatabase();
 
             ToDo = new ObservableCollection<TaskModel>();
             Doing = new ObservableCollection<TaskModel>();
             Done = new ObservableCollection<TaskModel>();
 
-            ToDo.Add(new TaskModel()
+            LoadTask();
+        }
+
+        private async void LoadTask()
+        {
+            var allTasks = await localDatabaseService.GetAllTasks();
+
+            foreach (var item in allTasks)
             {
-                Id = "1",
-                Name = "Task 1",
-                DateTime = DateTime.Now,
-                Status = 1
-            });
+                switch (item.Status)
+                {
+                    case 0:
+                        ToDo.Add(item);
+                        break;
+                    case 1:
+                        Doing.Add(item);
+                        break;
+                    case 2:
+                        Done.Add(item);
+                        break;
+                }
+            }
+        }
 
-            Doing.Add(new TaskModel()
-            {
-                Id = "2",
-                Name = "Task 2",
-                DateTime = DateTime.Now,
-                Status = 0
-            });
-
-            Done.Add(new TaskModel()
-            {
-                Id = "3",
-                Name = "Task 3",
-                DateTime = DateTime.Now,
-                Status = 1
-            });
-
-
+        private async void InitializeDatabase()
+        {
+            await localDatabaseService.Initialize();
         }
     }
 }

@@ -7,5 +7,6 @@ namespace Kanban
     class NavigationConstants
     {
         public const string NewTask = "NewTaskPage";
+        public const string About = "AboutPage";
     }
 }
