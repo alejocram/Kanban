@@ -1,8 +1,8 @@
 ﻿using Kanban.Base;
+using Kanban.Helpers;
 using Kanban.Models;
 using Kanban.Services;
-using Kanban.Services.LocalDatabase;
-using Kanban.Views;
+using Kanban.ViewModels.Domain;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -16,13 +16,13 @@ namespace Kanban.ViewModels
     public class MainPageViewModel : BindableBase
     {
         private readonly NavigationService navigationService;
-        private readonly LocalDatabaseService localDatabaseService;
+        private readonly ApiService apiService;
 
-        public ObservableCollection<TaskModel> ToDo { get; set; }
-        public ObservableCollection<TaskModel> Doing { get; set; }
-
-        public ObservableCollection<TaskModel> Done { get; set; }
-
+        public ObservableCollection<TaskItemViewModel> ToDo { get; set; }
+        public ObservableCollection<TaskItemViewModel> Doing { get; set; }
+        public ObservableCollection<TaskItemViewModel> Done { get; set; }
+        
+        //Ejemplo de comando en un get
         public ICommand AddTaskCommand
         {
             get
@@ -46,52 +46,55 @@ namespace Kanban.ViewModels
                         Done.Clear();
                         break;
                     case "Reset":
-
                         break;
+                    case "OtherPage":
                     case "AboutPage":
                         navigationService.Navigate(actionToExecute);
-                        break;
-                    default:
                         break;
                 }
             });
 
             navigationService = new NavigationService();
-            localDatabaseService = new LocalDatabaseService();
+            apiService = new ApiService();
 
-            InitializeDatabase();
+            ToDo = new ObservableCollection<TaskItemViewModel>();
+            Doing = new ObservableCollection<TaskItemViewModel>();
+            Done = new ObservableCollection<TaskItemViewModel>();
 
-            ToDo = new ObservableCollection<TaskModel>();
-            Doing = new ObservableCollection<TaskModel>();
-            Done = new ObservableCollection<TaskModel>();
-
-            LoadTask();
+            LoadTasks();
         }
 
-        private async void LoadTask()
+        internal async Task RefreshTasks()
         {
-            var allTasks = await localDatabaseService.GetAllTasks();
+            ToDo.Clear();
+            Doing.Clear();
+            Done.Clear();
 
-            foreach (var item in allTasks)
+            await LoadTasks();
+        }
+
+        private async Task LoadTasks()
+        {
+            var result = await apiService.GetAllTasks();
+
+            if (result.HttpResponse.IsSuccessStatusCode)
             {
-                switch (item.Status)
+                foreach (var item in result.Data)
                 {
-                    case 0:
-                        ToDo.Add(item);
-                        break;
-                    case 1:
-                        Doing.Add(item);
-                        break;
-                    case 2:
-                        Done.Add(item);
-                        break;
+                    switch (item.Status)
+                    {
+                        case 0:
+                            ToDo.Add(ViewModelHelper.Get(item));
+                            break;
+                        case 1:
+                            Doing.Add(ViewModelHelper.Get(item));
+                            break;
+                        case 2:
+                            Done.Add(ViewModelHelper.Get(item));
+                            break;
+                    }
                 }
-            }
-        }
-
-        private async void InitializeDatabase()
-        {
-            await localDatabaseService.Initialize();
+            } 
         }
     }
 }

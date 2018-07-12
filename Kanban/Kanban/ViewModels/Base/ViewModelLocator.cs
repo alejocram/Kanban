@@ -6,13 +6,11 @@ namespace Kanban.ViewModels.Base
 {
     public class ViewModelLocator
     {
-
         public MainPageViewModel MainPage { get; set; }
 
         public ViewModelLocator()
         {
             MainPage = new MainPageViewModel();
         }
-
     }
 }

@@ -32,7 +32,7 @@ namespace Kanban.Services.LocalDatabase
             return await database.Table<TaskModel>().ToListAsync();
         }
 
-        public async Task<TaskModel> GetTask(string id)
+        public async Task<TaskModel> GetTaskById(string id)
         {
             return await database.GetAsync<TaskModel>(id);
         }

@@ -4,7 +4,7 @@
              xmlns:vms="clr-namespace:Kanban.ViewModels"
              x:Class="Kanban.Views.NewTaskPage"
              BindingContext="{Binding Source={StaticResource NewTaskPage}}"
-             Title="Nueva Tarea">
+             Title="Nueva tarea">
     <ContentPage.Resources>
         <ResourceDictionary>
             <vms:NewTaskPageViewModel x:Key="NewTaskPage"></vms:NewTaskPageViewModel>

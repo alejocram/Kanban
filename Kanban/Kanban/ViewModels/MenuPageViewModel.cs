@@ -7,7 +7,7 @@ using System.Text;
 
 namespace Kanban.ViewModels
 {
-    public class MenuPageViewModel : BindableBase
+    class MenuPageViewModel: BindableBase
     {
 
         public ObservableCollection<MenuItemViewModel> Items { get; set; }

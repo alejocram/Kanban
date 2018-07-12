@@ -21,6 +21,7 @@ namespace Kanban.Views
         {
             App.Navigator = this.Navigator;
             App.Master = this;
+
             base.OnAppearing();
         }
     }

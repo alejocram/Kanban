@@ -2,21 +2,33 @@
 <Application xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:base="clr-namespace:Kanban.ViewModels.Base"
+             xmlns:converters="clr-namespace:Kanban.Converters"
              x:Class="Kanban.App">
 	<Application.Resources>
         <ResourceDictionary>
+            <!--Converters-->
+            <converters:StatusToColorConverter x:Key="StatusToColorConverter"></converters:StatusToColorConverter>
             <!--Custom Classes-->
             <base:ViewModelLocator x:Key="Locator"></base:ViewModelLocator>
             <!--DataTemplates-->
             <DataTemplate x:Key="TaskItemTemplate">
                 <ViewCell>
+                    <ViewCell.ContextActions>
+                        <MenuItem Text="Delete" IsDestructive="True" Command="{Binding DeleteCommand}"></MenuItem>
+                        <MenuItem Text="Change Status" Command="{Binding ChangeStatusCommand}"></MenuItem>
+                    </ViewCell.ContextActions>
                     <Grid Padding="10">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>
                         </Grid.ColumnDefinitions>
-                        <Image Source="Icon.png"></Image>
-                        <StackLayout>
+                        <Button 
+                            BackgroundColor="{Binding Status, Converter={StaticResource StatusToColorConverter}}"
+                            CornerRadius="25"
+                            HeightRequest="50" 
+                            WidthRequest="50">                            
+                        </Button>
+                        <StackLayout Grid.Column="1">
                             <Label Text="{Binding Name}"></Label>
                             <Label Text="{Binding DateTime}"></Label>
                         </StackLayout>
@@ -26,9 +38,13 @@
             <DataTemplate x:Key="MenuItemTemplate">
                 <ViewCell>
                     <Grid Padding="10">
+                        
                         <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding ExecuteActionCommand}"></TapGestureRecognizer>
+                            <TapGestureRecognizer 
+                                Command="{Binding ExecuteActionCommand}">
+                            </TapGestureRecognizer>
                         </Grid.GestureRecognizers>
+                        
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"></ColumnDefinition>
                             <ColumnDefinition Width="*"></ColumnDefinition>

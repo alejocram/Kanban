@@ -12,7 +12,6 @@ namespace Kanban.ViewModels.Domain
         public string Name { get; set; }
         public string Picture { get; set; }
         public string Description { get; set; }
-
         public string ActionKey { get; set; }
 
         public ICommand ExecuteActionCommand { get; set; }

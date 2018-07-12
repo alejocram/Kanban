@@ -10,6 +10,7 @@ namespace Kanban.Services
         public void Navigate(string pageKey)
         {
             App.Master.IsPresented = false;
+
             switch (pageKey)
             {
                 case NavigationConstants.NewTask:
